@@ -79,7 +79,7 @@ template <class T> class section_impl : public section
 {
   public:
     //------------------------------------------------------------------------------
-    section_impl( const endianness_convertor*                    convertor,
+    section_impl( const endianness_convertor*                   convertor,
                   const address_translator*                     translator,
                   const std::shared_ptr<compression_interface>& compression )
         : convertor( convertor ), translator( translator ),
@@ -284,8 +284,8 @@ template <class T> class section_impl : public section
             ( *translator )[( *convertor )( header.sh_offset )];
         Elf_Xword size = get_size();
         if ( nullptr == data && SHT_NULL != get_type() &&
-             SHT_NOBITS != get_type() &&
-             sh_offset <= get_stream_size() && size <= (get_stream_size() - sh_offset)) {
+             SHT_NOBITS != get_type() && sh_offset <= get_stream_size() &&
+             size <= ( get_stream_size() - sh_offset ) ) {
             data.reset( new ( std::nothrow ) char[size_t( size ) + 1] );
 
             if ( ( 0 != size ) && ( nullptr != data ) ) {
@@ -366,7 +366,7 @@ template <class T> class section_impl : public section
     std::string                                  name;
     mutable std::unique_ptr<char[]>              data;
     mutable Elf_Word                             data_size      = 0;
-    const endianness_convertor*                   convertor      = nullptr;
+    const endianness_convertor*                  convertor      = nullptr;
     const address_translator*                    translator     = nullptr;
     const std::shared_ptr<compression_interface> compression    = nullptr;
     bool                                         is_address_set = false;
